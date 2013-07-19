@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="com.aspose.doc" default="all" basedir=".">
+
+	<property name="organisation" value="aspose" />
+	<property name="artifactName" value="docTest" />
+
+
+	<property name="build.dir" value="build" />
+	<property name="build.lib" value="lib" />
+	<property name="build.classes" value="${build.dir}/classes" />
+	<property name="build.distrib" location="${build.dir}/distrib" />
+	<property name="src.dir" value="src/java" />
+	<property name="test.dir" value="src/test" />
+
+
+	<path id="build.classpath">
+		<fileset dir="${build.lib}" />
+	</path>
+
+
+	<target name="all" depends="clean,package" />
+
+	<target name="prepare">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.classes}" />
+		<mkdir dir="${build.lib}" />
+		<mkdir dir="${build.distrib}" />
+	</target>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="build" depends="prepare">
+		<javac srcdir="${src.dir}" destdir="${build.classes}" classpathref="build.classpath" debug="on" encoding="cp1251" />
+	</target>
+
+	<target name="package" depends="build">
+		<mkdir dir="${build.distrib}" />
+		<mkdir dir="${build.distrib}/jars" />
+		<mkdir dir="${build.distrib}/sources" />
+
+		<jar destfile="${build.distrib}/jars/${artifactName}-bin.jar">
+			<fileset dir="${build.classes}" />
+			<manifest>
+				<attribute name="Organisation" value="${organisation}" />
+			</manifest>
+		</jar>
+
+		<jar destfile="${build.distrib}/sources/${artifactName}-src.jar">
+			<fileset dir="${src.dir}" />
+			<manifest>
+				<attribute name="Organisation" value="${organisation}" />
+			</manifest>
+		</jar>
+	</target>
+
+</project>
